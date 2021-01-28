@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchVC.swift
 //  TakeHomeProject
 //
 //  Created by Alexander Ha on 1/21/21.
@@ -24,6 +24,8 @@ class SearchVC: UIViewController {
     
     //MARK: - Properties
     
+    
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -33,10 +35,11 @@ class SearchVC: UIViewController {
         createDismissKeyboardTapGesture()
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.isNavigationBarHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     //MARK: - Helpers
@@ -95,7 +98,6 @@ class SearchVC: UIViewController {
     //MARK: - Selectors
         
     @objc private func pushFollowerListVC() {
-        
         guard isUsernameEntered else {
             presentGFAlertOnMainThread(title: "Empty Username", message: "Please enter a username 🙂", buttonTitle: "Ok")
             return

@@ -1,5 +1,5 @@
 //
-//  Extensions.swift
+//  GFExtensions.swift
 //  TakeHomeProject
 //
 //  Created by Alexander Ha on 1/26/21.
@@ -7,7 +7,9 @@
 
 import UIKit
 
-//MARK: - Anchors
+//MARK: - UIView Anchors
+
+fileprivate var containerView: UIView!
 
 extension UIView {
     
@@ -49,13 +51,16 @@ extension UIView {
         }
     }
     
+    
     func fillView(view: UIView) {
         self.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingLeading: 0, paddingBottom: 0, paddingTrailing: 0)
     }
     
+    
     func fillViewWithPadding(view: UIView, paddingTop top: CGFloat, paddingLeading lead: CGFloat, paddingBottom bottom: CGFloat, paddingTrailing trailing: CGFloat) {
           self.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, paddingTop: top, paddingLeading: lead, paddingBottom: bottom, paddingTrailing: trailing)
       }
+    
     
     func centerX(inView view: UIView, leadingAnchor: NSLayoutXAxisAnchor? = nil, paddingLeading: CGFloat = 0, constant: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +71,7 @@ extension UIView {
         }
     }
     
+    
     func centerY(inView view: UIView, leadingAnchor: NSLayoutXAxisAnchor? = nil, paddingLeading: CGFloat = 0, constant: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
         centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
@@ -75,11 +81,13 @@ extension UIView {
         }
     }
     
+    
     func centerInView(view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
+    
     
     func setDimensions(height: CGFloat, width: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -87,10 +95,12 @@ extension UIView {
         widthAnchor.constraint(equalToConstant: width).isActive = true
     }
     
+    
     func setHeight(height: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }
+    
     
     func setWidth(width: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -111,6 +121,37 @@ extension UIViewController {
         }
     }
     
+    
+    func showLoadingView() {
+        containerView = UIView(frame: view.bounds)
+        view.addSubview(containerView)
+        
+        containerView.backgroundColor = .systemBackground
+        containerView.alpha = 0
+        
+        UIView.animate(withDuration: 0.25) { containerView.alpha = 0.8 }
+       
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        containerView.addSubview(activityIndicator)
+        activityIndicator.centerInView(view: view)
+        
+        activityIndicator.startAnimating()
+    }
+    
+    
+    func dismissLoadingView() {
+        DispatchQueue.main.async {
+            containerView.removeFromSuperview()
+            containerView = nil
+        }
+    }
+    
+    
+    func showEmptyStateView(with message: String, in view: UIView) {
+        let emptyStateView = GFEmptyStateView(message: message)
+        emptyStateView.frame = view.bounds
+        view.addSubview(emptyStateView)
+    }
 }
 
 //MARK: - TextValidation
