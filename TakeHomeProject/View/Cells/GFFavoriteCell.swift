@@ -16,7 +16,7 @@ class GFFavoriteCell: UITableViewCell {
     
     //MARK: - Properties
     
-    static let reuseID = "FavoriteCell"
+    static let reuseID = "GFFavoriteCell"
    
     //MARK: - Lifecycle
     
