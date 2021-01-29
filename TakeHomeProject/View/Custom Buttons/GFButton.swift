@@ -15,7 +15,6 @@ class GFButton: UIButton {
         super.init(frame: frame)
         
         configureUI()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -31,6 +30,11 @@ class GFButton: UIButton {
     }
     
     //MARK: - Helpers
+    
+    func set(backgroundColor: UIColor, title: String) {
+        self.backgroundColor = backgroundColor
+        setTitle(title, for: .normal)
+    }
    
     private func configureUI() {
         layer.cornerRadius = 10

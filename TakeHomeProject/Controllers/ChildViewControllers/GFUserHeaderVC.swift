@@ -35,10 +35,12 @@ class GFUserHeaderVC: UIViewController {
         configureUIElements()
     }
     
+    
     init(user: User) {
         super.init(nibName: nil, bundle: nil)
         self.user = user
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -54,6 +56,7 @@ class GFUserHeaderVC: UIViewController {
         locationLabel.text = user.location ?? "N/A"
         bioLabel.text = user.bio ?? "No bio available"
     }
+    
     
     private func configureUI() {
         let padding: CGFloat = 20

@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol UserInfoVCDelegate: AnyObject {
+    func didTapGitHubProfile(for user: User)
+    func didTapGetFollowers(for user: User)
+}
+
+
 class UserInfoVC: UIViewController {
     
     //MARK: - UIComponents
@@ -14,10 +20,12 @@ class UserInfoVC: UIViewController {
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
+    let dateLabel = GFBodyLabel(textAlignment: .center)
     
     //MARK: - Properties
     
     var username: String!
+    weak var delegate: FollowerListVCDelegate!
     
     //MARK: - Lifecycle
     
@@ -36,14 +44,27 @@ class UserInfoVC: UIViewController {
             
             switch result {
             case .success(let user):
-                DispatchQueue.main.async {
-                    self.add(childVC: GFUserHeaderVC(user: user), to: self.headerView)
-                }
+                DispatchQueue.main.async { self.configureUIElements(with: user) }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
             }
         }
     }
+    
+    
+    func configureUIElements(with user: User) {
+        let repoItemVC = GFRepoItemVC(user: user)
+        repoItemVC.delegate = self
+        
+        let followerItemVC = GFFollowerItemVC(user: user)
+        followerItemVC.delegate = self
+        
+        self.add(childVC: GFUserHeaderVC(user: user), to: self.headerView)
+        self.add(childVC: repoItemVC, to: self.itemViewOne)
+        self.add(childVC: followerItemVC, to: self.itemViewTwo)
+        self.dateLabel.text = "GitHub Since \(user.createdAt.convertToDisplayFormat())"
+    }
+    
     
     func add(childVC: UIViewController, to containerView: UIView) {
         addChild(childVC)
@@ -68,7 +89,6 @@ class UserInfoVC: UIViewController {
                           height: 180)
         
         view.addSubview(itemViewOne)
-        itemViewOne.backgroundColor = .systemPink
         itemViewOne.anchor(top: headerView.bottomAnchor,
                            leading: view.leadingAnchor,
                            trailing: view.trailingAnchor,
@@ -78,7 +98,6 @@ class UserInfoVC: UIViewController {
                            height: itemHeight)
         
         view.addSubview(itemViewTwo)
-        itemViewTwo.backgroundColor = .systemBlue
         itemViewTwo.anchor(top: itemViewOne.bottomAnchor,
                            leading: view.leadingAnchor,
                            trailing: view.trailingAnchor,
@@ -86,12 +105,44 @@ class UserInfoVC: UIViewController {
                            paddingLeading: padding,
                            paddingTrailing: padding,
                            height: itemHeight)
+        
+        view.addSubview(dateLabel)
+        dateLabel.anchor(top: itemViewTwo.bottomAnchor,
+                         leading: view.leadingAnchor,
+                         trailing: view.trailingAnchor,
+                         paddingTop: padding,
+                         paddingLeading: padding,
+                         paddingTrailing: padding,
+                         height: 18)
     }
     
     //MARK: - Selectors
     
     @objc private func dismissVC() {
         dismiss(animated: true)
+    }
+}
+
+//MARK: - UserInfoVCDelegate
+
+extension UserInfoVC: UserInfoVCDelegate {
+    
+    func didTapGitHubProfile(for user: User) {
+        guard let url = URL(string: user.htmlUrl) else {
+            presentGFAlertOnMainThread(title: "Invalid URL", message: "The url attached to this user is invalid", buttonTitle: "Ok")
+            return
+        }
+        presentSafariVC(with: url)
+    }
+    
+    
+    func didTapGetFollowers(for user: User) {
+        guard user.followers != 0 else {
+            presentGFAlertOnMainThread(title: "No Followers", message: "This user has no followers 😞", buttonTitle: "Ok")
+            return
+        }
+        delegate.didRequestFollowers(for: user.login)
+        dismissVC()
     }
     
 }
