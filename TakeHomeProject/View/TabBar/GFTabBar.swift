@@ -31,5 +31,4 @@ class GFTabBar: UITabBarController {
         return UINavigationController(rootViewController: favoritesVC)
     }
     
-    
 }

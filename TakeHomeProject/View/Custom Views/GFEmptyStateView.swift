@@ -41,6 +41,7 @@ class GFEmptyStateView: UIView {
         configureLogoImage()
     }
     
+    
     private func configureMessageLabel() {
         addSubview(messageLabel)
         messageLabel.numberOfLines = 3
@@ -54,6 +55,7 @@ class GFEmptyStateView: UIView {
                             paddingTrailing: 40,
                             height: 200)
     }
+    
     
     private func configureLogoImage() {
         addSubview(logoImageView)

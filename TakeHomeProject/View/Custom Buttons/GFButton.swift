@@ -35,6 +35,7 @@ class GFButton: UIButton {
         self.backgroundColor = backgroundColor
         setTitle(title, for: .normal)
     }
+    
    
     private func configureUI() {
         layer.cornerRadius = 10

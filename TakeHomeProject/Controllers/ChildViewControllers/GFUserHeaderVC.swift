@@ -12,15 +12,17 @@ class GFUserHeaderVC: UIViewController {
     //MARK: - UIComponents
     
     let avatarImageView = GFAvatarImageView(frame: .zero)
-    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
-    let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
     let locationImageView: UIImageView = {
         let iv = UIImageView(image: SFSymbols.location)
         iv.tintColor = .secondaryLabel
         return iv
     }()
+    
+    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
+    let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
     let locationLabel = GFSecondaryTitleLabel(fontSize: 18)
     let bioLabel = GFBodyLabel(textAlignment: .left)
+    
     
     //MARK: - Properties
     
@@ -49,15 +51,8 @@ class GFUserHeaderVC: UIViewController {
     
     //MARK: - Helpers
     
-    func downloadAvatarImage() {
-        NetworkManager.shared.downloadImage(from: user.avatarUrl) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async { self.avatarImageView.image = image }
-        }
-    }
-    
     func configureUIElements() {
-        downloadAvatarImage()
+        avatarImageView.downloadImage(fromURL: user.avatarUrl)
         usernameLabel.text = user.login
         nameLabel.text = user.name ?? ""
         locationLabel.text = user.location ?? "N/A"
@@ -114,5 +109,4 @@ class GFUserHeaderVC: UIViewController {
                         paddingTrailing: padding,
                         height: 90)
     }
-    
 }

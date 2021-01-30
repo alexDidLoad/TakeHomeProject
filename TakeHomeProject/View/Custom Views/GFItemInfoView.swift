@@ -34,6 +34,7 @@ class GFItemInfoView: UIView {
         configureUI()
     }
     
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,6 +58,7 @@ class GFItemInfoView: UIView {
         }
         countLabel.text = String(count)
     }
+    
     
     private func configureUI() {
         addSubview(symbolImageView)

@@ -14,6 +14,7 @@ class NetworkManager {
     static let shared = NetworkManager()
     private let baseURL = "https://api.github.com"
     let cache = NSCache<NSString, UIImage>()
+    
     //MARK: - Lifecycle
     
     private init() {}
@@ -58,6 +59,7 @@ class NetworkManager {
         task.resume()
     }
     
+    
     func getUserInfo(for username: String, completion: @escaping (Result<User, GFError>) -> Void) {
         let endpoint = baseURL + "/users/\(username)"
         
@@ -96,6 +98,7 @@ class NetworkManager {
         
         task.resume()
     }
+    
     
     func downloadImage(from urlString: String, completion: @escaping(UIImage?) -> Void) {
         //check cache for images that already exist

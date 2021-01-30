@@ -84,7 +84,6 @@ class UserInfoVC: GFDataLoadingVC {
         navigationItem.rightBarButtonItem = doneButton
         view.backgroundColor = .systemBackground
         
-        
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
         

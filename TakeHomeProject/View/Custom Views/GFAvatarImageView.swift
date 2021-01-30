@@ -11,7 +11,7 @@ class GFAvatarImageView: UIImageView {
     
     //MARK: - Properties
     
-    let cache = NetworkManager.shared.cache
+//    let cache = NetworkManager.shared.cache
     let placeholderImage = Images.placeholder
     
     //MARK: - Lifecycle
@@ -27,7 +27,16 @@ class GFAvatarImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     //MARK: - Helpers
+    
+    func downloadImage(fromURL url: String) {
+        NetworkManager.shared.downloadImage(from: url) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async { self.image = image }
+        }
+    }
+    
     
     private func configureUI() {
         layer.cornerRadius = 10
