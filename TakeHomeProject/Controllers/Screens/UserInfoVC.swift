@@ -15,6 +15,9 @@ class UserInfoVC: GFDataLoadingVC {
     
     //MARK: - UIComponents
     
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
@@ -30,6 +33,7 @@ class UserInfoVC: GFDataLoadingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureScrollView()
         configureUI()
         getUserInfo()
     }
@@ -50,11 +54,12 @@ class UserInfoVC: GFDataLoadingVC {
     }
     
     
-    func configureUIElements(with user: User) {
-        self.add(childVC: GFUserHeaderVC(user: user), to: self.headerView)
-        self.add(childVC: GFRepoItemVC(user: user, delegate: self), to: self.itemViewOne)
-        self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
-        self.dateLabel.text = "GitHub Since \(user.createdAt.convertToMonthYearFormat())"
+    func configureScrollView() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        scrollView.fillView(view)
+        contentView.fillView(scrollView)
+        contentView.setDimensions(height: 610, width: view.frame.width)
     }
     
     
@@ -66,42 +71,51 @@ class UserInfoVC: GFDataLoadingVC {
     }
     
     
+    func configureUIElements(with user: User) {
+        self.add(childVC: GFUserHeaderVC(user: user), to: self.headerView)
+        self.add(childVC: GFRepoItemVC(user: user, delegate: self), to: self.itemViewOne)
+        self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
+        self.dateLabel.text = "GitHub Since \(user.createdAt.convertToMonthYearFormat())"
+    }
+    
+    
     private func configureUI() {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
         view.backgroundColor = .systemBackground
         
+        
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
         
-        view.addSubview(headerView)
-        headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                          leading: view.leadingAnchor,
-                          trailing: view.trailingAnchor,
+        contentView.addSubview(headerView)
+        headerView.anchor(top: contentView.safeAreaLayoutGuide.topAnchor,
+                          leading: contentView.leadingAnchor,
+                          trailing: contentView.trailingAnchor,
                           height: 195)
         
-        view.addSubview(itemViewOne)
+        contentView.addSubview(itemViewOne)
         itemViewOne.anchor(top: headerView.bottomAnchor,
-                           leading: view.leadingAnchor,
-                           trailing: view.trailingAnchor,
+                           leading: contentView.leadingAnchor,
+                           trailing: contentView.trailingAnchor,
                            paddingTop: padding,
                            paddingLeading: padding,
                            paddingTrailing: padding,
                            height: itemHeight)
         
-        view.addSubview(itemViewTwo)
+        contentView.addSubview(itemViewTwo)
         itemViewTwo.anchor(top: itemViewOne.bottomAnchor,
-                           leading: view.leadingAnchor,
-                           trailing: view.trailingAnchor,
+                           leading: contentView.leadingAnchor,
+                           trailing: contentView.trailingAnchor,
                            paddingTop: padding,
                            paddingLeading: padding,
                            paddingTrailing: padding,
                            height: itemHeight)
         
-        view.addSubview(dateLabel)
+        contentView.addSubview(dateLabel)
         dateLabel.anchor(top: itemViewTwo.bottomAnchor,
-                         leading: view.leadingAnchor,
-                         trailing: view.trailingAnchor,
+                         leading: contentView.leadingAnchor,
+                         trailing: contentView.trailingAnchor,
                          paddingTop: padding,
                          paddingLeading: padding,
                          paddingTrailing: padding,

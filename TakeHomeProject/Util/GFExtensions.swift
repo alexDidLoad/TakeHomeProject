@@ -52,7 +52,7 @@ extension UIView {
     }
     
     
-    func fillView(view: UIView) {
+    func fillView(_ view: UIView) {
         self.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, paddingTop: 0, paddingLeading: 0, paddingBottom: 0, paddingTrailing: 0)
     }
     
@@ -180,6 +180,20 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM yyyy"
         return dateFormatter.string(from: self)
+    }
+    
+}
+
+//MARK: - UITableView Extension
+
+extension UITableView {
+    
+    func reloadDataOnMainThread() {
+        DispatchQueue.main.async { self.reloadData() }
+    }
+    
+    func removeExcessCells() {
+        tableFooterView = UIView(frame: .zero)
     }
     
 }
