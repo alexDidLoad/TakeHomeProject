@@ -30,6 +30,8 @@
 		110A012925C353F0000C66FC /* GFFollowerItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110A012825C353F0000C66FC /* GFFollowerItemVC.swift */; };
 		110A012E25C3873A000C66FC /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110A012D25C3873A000C66FC /* PersistenceManager.swift */; };
 		110A013125C392C9000C66FC /* GFFavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110A013025C392C9000C66FC /* GFFavoriteCell.swift */; };
+		110A013525C47EF2000C66FC /* GFTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110A013425C47EF2000C66FC /* GFTabBar.swift */; };
+		110A013925C48EF1000C66FC /* GFDataLoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110A013825C48EF1000C66FC /* GFDataLoadingVC.swift */; };
 		11578D1025C0CE5E00B33A31 /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11578D0F25C0CE5E00B33A31 /* FavoritesListVC.swift */; };
 		11578D1825C0D72400B33A31 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11578D1725C0D72400B33A31 /* GFButton.swift */; };
 		11578D1E25C0D8BE00B33A31 /* GFExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11578D1D25C0D8BE00B33A31 /* GFExtensions.swift */; };
@@ -65,6 +67,8 @@
 		110A012825C353F0000C66FC /* GFFollowerItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFFollowerItemVC.swift; sourceTree = "<group>"; };
 		110A012D25C3873A000C66FC /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		110A013025C392C9000C66FC /* GFFavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFFavoriteCell.swift; sourceTree = "<group>"; };
+		110A013425C47EF2000C66FC /* GFTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTabBar.swift; sourceTree = "<group>"; };
+		110A013825C48EF1000C66FC /* GFDataLoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFDataLoadingVC.swift; sourceTree = "<group>"; };
 		11578D0F25C0CE5E00B33A31 /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
 		11578D1725C0D72400B33A31 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
 		11578D1D25C0D8BE00B33A31 /* GFExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFExtensions.swift; sourceTree = "<group>"; };
@@ -182,9 +186,26 @@
 			path = ItemInfoVCs;
 			sourceTree = "<group>";
 		};
+		110A013325C47ED2000C66FC /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				110A013425C47EF2000C66FC /* GFTabBar.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		110A013725C48ECE000C66FC /* SuperClassVC */ = {
+			isa = PBXGroup;
+			children = (
+				110A013825C48EF1000C66FC /* GFDataLoadingVC.swift */,
+			);
+			path = SuperClassVC;
+			sourceTree = "<group>";
+		};
 		11578D1225C0CEB300B33A31 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				110A013725C48ECE000C66FC /* SuperClassVC */,
 				110A011225C24D50000C66FC /* Screens */,
 				110A011625C24D7A000C66FC /* ChildViewControllers */,
 				110A00E625C11090000C66FC /* CustomAlertController */,
@@ -195,6 +216,7 @@
 		11578D1525C0D6EB00B33A31 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				110A013325C47ED2000C66FC /* TabBar */,
 				110A010425C2015B000C66FC /* Custom Views */,
 				110A010525C201A4000C66FC /* Custom Textfield */,
 				110A00F625C1C072000C66FC /* Cells */,
@@ -340,10 +362,12 @@
 				110A00E925C11301000C66FC /* Follower.swift in Sources */,
 				110A012625C35207000C66FC /* GFRepoItemVC.swift in Sources */,
 				110A010B25C20BC1000C66FC /* UserInfoVC.swift in Sources */,
+				110A013925C48EF1000C66FC /* GFDataLoadingVC.swift in Sources */,
 				11CC555225BA6B7800ACA40A /* SceneDelegate.swift in Sources */,
 				110A00D525C10157000C66FC /* GFTitleLabel.swift in Sources */,
 				110A00F825C1C082000C66FC /* GFFollowerCell.swift in Sources */,
 				110A011025C24D24000C66FC /* GFUserHeaderVC.swift in Sources */,
+				110A013525C47EF2000C66FC /* GFTabBar.swift in Sources */,
 				110A00D125C0F182000C66FC /* FollowerListVC.swift in Sources */,
 				110A012325C34F24000C66FC /* GFItemInfoVC.swift in Sources */,
 				110A012925C353F0000C66FC /* GFFollowerItemVC.swift in Sources */,

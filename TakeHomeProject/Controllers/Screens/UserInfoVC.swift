@@ -8,12 +8,10 @@
 import UIKit
 
 protocol UserInfoVCDelegate: AnyObject {
-    func didTapGitHubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
+    func didRequestFollowers(for username: String)
 }
 
-
-class UserInfoVC: UIViewController {
+class UserInfoVC: GFDataLoadingVC {
     
     //MARK: - UIComponents
     
@@ -25,7 +23,7 @@ class UserInfoVC: UIViewController {
     //MARK: - Properties
     
     var username: String!
-    weak var delegate: FollowerListVCDelegate!
+    weak var delegate: UserInfoVCDelegate!
     
     //MARK: - Lifecycle
     
@@ -53,16 +51,10 @@ class UserInfoVC: UIViewController {
     
     
     func configureUIElements(with user: User) {
-        let repoItemVC = GFRepoItemVC(user: user)
-        repoItemVC.delegate = self
-        
-        let followerItemVC = GFFollowerItemVC(user: user)
-        followerItemVC.delegate = self
-        
         self.add(childVC: GFUserHeaderVC(user: user), to: self.headerView)
-        self.add(childVC: repoItemVC, to: self.itemViewOne)
-        self.add(childVC: followerItemVC, to: self.itemViewTwo)
-        self.dateLabel.text = "GitHub Since \(user.createdAt.convertToDisplayFormat())"
+        self.add(childVC: GFRepoItemVC(user: user, delegate: self), to: self.itemViewOne)
+        self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
+        self.dateLabel.text = "GitHub Since \(user.createdAt.convertToMonthYearFormat())"
     }
     
     
@@ -86,7 +78,7 @@ class UserInfoVC: UIViewController {
         headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                           leading: view.leadingAnchor,
                           trailing: view.trailingAnchor,
-                          height: 180)
+                          height: 195)
         
         view.addSubview(itemViewOne)
         itemViewOne.anchor(top: headerView.bottomAnchor,
@@ -113,7 +105,7 @@ class UserInfoVC: UIViewController {
                          paddingTop: padding,
                          paddingLeading: padding,
                          paddingTrailing: padding,
-                         height: 18)
+                         height: 50)
     }
     
     //MARK: - Selectors
@@ -125,7 +117,7 @@ class UserInfoVC: UIViewController {
 
 //MARK: - UserInfoVCDelegate
 
-extension UserInfoVC: UserInfoVCDelegate {
+extension UserInfoVC: GFRepoItemVCDelegate, GFFollowerItemVCDelegate {
     
     func didTapGitHubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {

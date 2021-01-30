@@ -15,7 +15,7 @@ class GFUserHeaderVC: UIViewController {
     let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
     let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
     let locationImageView: UIImageView = {
-        let iv = UIImageView(image: UIImage(systemName: SFSymbols.location))
+        let iv = UIImageView(image: SFSymbols.location)
         iv.tintColor = .secondaryLabel
         return iv
     }()
@@ -49,8 +49,15 @@ class GFUserHeaderVC: UIViewController {
     
     //MARK: - Helpers
     
+    func downloadAvatarImage() {
+        NetworkManager.shared.downloadImage(from: user.avatarUrl) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async { self.avatarImageView.image = image }
+        }
+    }
+    
     func configureUIElements() {
-        avatarImageView.downloadImage(from: user.avatarUrl)
+        downloadAvatarImage()
         usernameLabel.text = user.login
         nameLabel.text = user.name ?? ""
         locationLabel.text = user.location ?? "N/A"
@@ -105,7 +112,7 @@ class GFUserHeaderVC: UIViewController {
                         trailing: view.trailingAnchor,
                         paddingTop: textImagePadding,
                         paddingTrailing: padding,
-                        height: 60)
+                        height: 90)
     }
     
 }

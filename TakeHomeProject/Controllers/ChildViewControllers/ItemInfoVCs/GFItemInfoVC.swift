@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class GFItemInfoVC: UIViewController {
     
     //MARK: - UIComponents
@@ -29,7 +28,6 @@ class GFItemInfoVC: UIViewController {
     //MARK: - Properties
     
     var user: User!
-    weak var delegate: UserInfoVCDelegate!
     
     //MARK: - Lifecycle
     

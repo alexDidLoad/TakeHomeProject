@@ -14,8 +14,6 @@ class GFEmptyStateView: UIView {
     let messageLabel = GFTitleLabel(textAlignment: .center, fontSize: 28)
     let logoImageView = UIImageView()
     
-    //MARK: - Properties
-    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -25,10 +23,9 @@ class GFEmptyStateView: UIView {
     }
     
     
-    init(message: String) {
-        super.init(frame: .zero)
+    convenience init(message: String) {
+        self.init(frame: .zero)
         messageLabel.text = message
-        configureUI()
     }
     
     
@@ -37,29 +34,40 @@ class GFEmptyStateView: UIView {
     }
     
     //MARK: - Helpers
+
     
     private func configureUI() {
+        configureMessageLabel()
+        configureLogoImage()
+    }
+    
+    private func configureMessageLabel() {
         addSubview(messageLabel)
         messageLabel.numberOfLines = 3
         messageLabel.textColor = .secondaryLabel
-        messageLabel.centerY(inView: self, constant: -150)
+        
+        let messageLabelCenterYConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? -120 : -150
+        messageLabel.centerY(inView: self, constant: messageLabelCenterYConstant)
         messageLabel.anchor(leading: self.leadingAnchor,
                             trailing: self.trailingAnchor,
                             paddingLeading: 40,
                             paddingTrailing: 40,
                             height: 200)
-        
+    }
+    
+    private func configureLogoImage() {
         addSubview(logoImageView)
-        logoImageView.image = UIImage(named: "empty-state-logo")
+        logoImageView.image = Images.emptyStateLogo
+        
+        let logoImageViewBottomConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 80 : 40
         logoImageView.anchor(bottom: self.bottomAnchor,
                              trailing: self.trailingAnchor,
-                             paddingBottom: -40,
+                             paddingBottom: -logoImageViewBottomConstant,
                              paddingTrailing: -170)
         NSLayoutConstraint.activate([
             logoImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.3),
             logoImageView.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.3)
         ])
-        
     }
     
 }

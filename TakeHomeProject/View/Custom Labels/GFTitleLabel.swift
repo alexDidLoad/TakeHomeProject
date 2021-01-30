@@ -8,7 +8,7 @@
 import UIKit
 
 class GFTitleLabel: UILabel {
-
+    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -17,11 +17,10 @@ class GFTitleLabel: UILabel {
         configureUI()
     }
     
-    init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
-        super.init(frame: .zero)
+    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+        self.init(frame: .zero)
         self.textAlignment = textAlignment
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
-        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -29,7 +28,7 @@ class GFTitleLabel: UILabel {
     }
     
     //MARK: - Helpers
-
+    
     private func configureUI() {
         textColor = .label
         adjustsFontSizeToFitWidth = true

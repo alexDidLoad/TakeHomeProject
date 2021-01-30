@@ -7,14 +7,13 @@
 
 import UIKit
 
-class FavoritesListVC: UIViewController {
+class FavoritesListVC: GFDataLoadingVC {
     
     //MARK: - UIComponents
     
     let tableView = UITableView()
     var favorites = [Follower]()
     
-    //MARK: - Properties
     
     //MARK: - Lifecycle
     
@@ -91,9 +90,7 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
-        let destinationVC = FollowerListVC()
-        destinationVC.username = favorite.login
-        destinationVC.title = favorite.login
+        let destinationVC = FollowerListVC(username: favorite.login)
         navigationController?.pushViewController(destinationVC, animated: true)
     }
     
@@ -109,7 +106,6 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
             guard let error = error else { return }
             self.presentGFAlertOnMainThread(title: "Unable to remove", message: error.rawValue, buttonTitle: "Ok")
         }
-        
     }
     
     

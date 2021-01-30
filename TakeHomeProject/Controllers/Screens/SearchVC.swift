@@ -18,13 +18,11 @@ class SearchVC: UIViewController {
         button.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
         return button
     }()
-    
-    var isUsernameEntered: Bool { return !userNameTextField.text!.isEmpty }
-    
+    var logoImageViewTopConstraint: NSLayoutConstraint!
     
     //MARK: - Properties
     
-    
+    var isUsernameEntered: Bool { return !userNameTextField.text!.isEmpty }
     
     //MARK: - Lifecycle
     
@@ -38,14 +36,14 @@ class SearchVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        userNameTextField.text = ""
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     //MARK: - Helpers
     
     private func createDismissKeyboardTapGesture() {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
@@ -60,11 +58,14 @@ class SearchVC: UIViewController {
     
     private func configureLogo() {
         view.addSubview(logoImageView)
-        logoImageView.image = UIImage(named: "gh-logo")
+        logoImageView.image = Images.ghLogo
+        
+        let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
+        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant)
+        
+        logoImageViewTopConstraint.isActive = true
         logoImageView.centerX(inView: view)
-        logoImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                             paddingTop: 80,
-                             height: 200,
+        logoImageView.anchor(height: 200,
                              width: 200)
     }
     
@@ -103,9 +104,8 @@ class SearchVC: UIViewController {
             return
         }
         
-        let followerListVC = FollowerListVC()
-        followerListVC.username = userNameTextField.text
-        followerListVC.title = userNameTextField.text
+        userNameTextField.resignFirstResponder()
+        let followerListVC = FollowerListVC(username: userNameTextField.text!)
         navigationController?.pushViewController(followerListVC, animated: true)
     }
     
